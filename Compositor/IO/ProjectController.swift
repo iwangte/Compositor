@@ -336,11 +336,11 @@ final class ProjectController {
         await finishWriting()
         guard session.isModified, session.document != nil else { return true }
         let alert = NSAlert()
-        alert.messageText = "Save changes to \(session.projectURL?.lastPathComponent ?? "Untitled")?"
-        alert.informativeText = "Your changes will be lost if you don’t save them."
-        alert.addButton(withTitle: "Save")
-        alert.addButton(withTitle: "Cancel")
-        alert.addButton(withTitle: "Don’t Save")
+        alert.messageText = String(format: "Save changes to %@?".localized, session.projectURL?.lastPathComponent ?? "Untitled".localized)
+        alert.informativeText = "Your changes will be lost if you don’t save them.".localized
+        alert.addButton(withTitle: "Save".localized)
+        alert.addButton(withTitle: "Cancel".localized)
+        alert.addButton(withTitle: "Don’t Save".localized)
         let response = await show(alert)
         if response == .alertFirstButtonReturn { return await saveCurrent() }
         return response == .alertThirdButtonReturn
@@ -349,9 +349,9 @@ final class ProjectController {
     private func showError(_ title: String, error: Error) async {
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = title
-        alert.informativeText = error.localizedDescription
-        alert.addButton(withTitle: "OK")
+        alert.messageText = title.localized
+        alert.informativeText = error.localizedDescription.localized
+        alert.addButton(withTitle: "OK".localized)
         _ = await show(alert)
     }
 

@@ -57,10 +57,10 @@ nonisolated enum PSDDocumentBuilder {
             }
             if record.isGroup {
                 if record.blendKey != "pass" && record.blendKey != "norm" {
-                    notes.append("Folder blend mode “\(record.blendKey)” isn’t supported. The folder will be pass-through.")
+                    notes.append(String(format: "Folder blend mode “%@” isn’t supported. The folder will be pass-through.".localized, record.blendKey))
                 }
             } else if record.blendMode == nil, record.blendKey != "pass" {
-                notes.append("Blend mode “\(record.blendKey.trimmingCharacters(in: .whitespaces))” isn’t supported and will be applied as Normal.")
+                notes.append(String(format: "Blend mode “%@” isn’t supported and will be applied as Normal.".localized, record.blendKey.trimmingCharacters(in: .whitespaces)))
             }
             if record.kind == .adjustment {
                 if record.adjustment == nil {

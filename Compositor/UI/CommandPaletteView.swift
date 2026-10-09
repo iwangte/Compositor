@@ -55,7 +55,7 @@ struct CommandPaletteView: View {
             if entry.isOn {
                 Image(systemName: "checkmark").font(.caption.weight(.semibold)).frame(width: 12)
             }
-            Text(entry.title).lineLimit(1)
+            Text(entry.title.localized).lineLimit(1)
             Spacer()
             if let shortcut = entry.shortcut { Text(shortcut).font(.callout.monospaced()).foregroundStyle(.secondary) }
         }
@@ -72,7 +72,10 @@ struct CommandPaletteView: View {
 final class CommandPaletteController {
     static let shared = CommandPaletteController()
     /// Left out of the palette: the palette itself and the system menus.
-    static let skipped: Set<String> = ["Search Commands…", "Window", "Help", "Services"]
+    static var skipped: Set<String> {
+        let keys = ["Search Commands…", "Window", "Help", "Services"]
+        return Set(keys + keys.map(\.localized))
+    }
 
     private(set) var panel: PalettePanel?
     private weak var window: NSWindow?

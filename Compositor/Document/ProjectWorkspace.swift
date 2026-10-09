@@ -8,7 +8,14 @@ final class ProjectTab: Identifiable {
     let session: EditorSession
     let controller: ProjectController
     let defaultName: String
-    var title: String { session.projectURL?.deletingPathExtension().lastPathComponent ?? defaultName }
+    var title: String { Self.interfaceName(session.projectURL?.deletingPathExtension().lastPathComponent ?? defaultName) }
+    /// "Untitled" and "Untitled 2" are stand-in names, shown in the chosen language. A saved file keeps its own name.
+    static func interfaceName(_ name: String) -> String {
+        if name == "Untitled" { return name.localized }
+        let prefix = "Untitled "
+        guard name.hasPrefix(prefix), let number = Int(name.dropFirst(prefix.count)) else { return name }
+        return String(format: "Untitled %lld".localized, number)
+    }
     init(name: String) {
         defaultName = name
         session = EditorSession()

@@ -45,7 +45,10 @@ final class CompositorApplicationDelegate: NSObject, NSApplicationDelegate {
         // text, not editing images, and only got in the way. It adds Enter Full Screen (Globe-F) to the View menu,
         // beside Canvas Only (F), which does the same job without the slow slide into a new space. Taken out once the menus exist, and again whenever the
         // menu bar is opened, in case SwiftUI has rebuilt them since.
-        DispatchQueue.main.async { Self.removeSystemExtras() }
+        DispatchQueue.main.async {
+            Self.removeSystemExtras()
+            AppLanguageController.shared.applyStandardMenuTitles()
+        }
         // View › Canvas Only's key is a plain F, and the menu takes a plain letter even while something is being
         // typed. So an F meant for a text field (the palette's search, a layer's name, a number) goes straight to it,
         // before the menu sees it.
@@ -66,7 +69,10 @@ final class CompositorApplicationDelegate: NSObject, NSApplicationDelegate {
         }
         // Run as the menu opens (no queue), before it's drawn.
         NotificationCenter.default.addObserver(forName: NSMenu.didBeginTrackingNotification, object: nil, queue: nil) { _ in
-            MainActor.assumeIsolated { Self.removeSystemExtras() }
+            MainActor.assumeIsolated {
+                Self.removeSystemExtras()
+                AppLanguageController.shared.applyStandardMenuTitles()
+            }
         }
         // Writing Tools and AutoFill are put back each time the Edit menu opens, so they're taken out again as they're
         // added, before the menu is drawn.

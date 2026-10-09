@@ -81,7 +81,7 @@ struct ExportAsSheet: View {
                 GridRow {
                     Text("Format")
                     Picker("Format", selection: $format) {
-                        ForEach(ExportFormat.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                        ForEach(ExportFormat.allCases, id: \.self) { Text($0.rawValue.localized).tag($0) }
                     }
                     .pickerStyle(.segmented).labelsHidden().fixedSize()
                 }
@@ -125,7 +125,7 @@ struct ExportAsSheet: View {
                 }
             }
             HStack(spacing: 12) {
-                Text(format == .png ? "Transparency kept · sRGB" : "sRGB")
+                Text((format == .png ? "Transparency kept · sRGB" : "sRGB").localized)
                     .foregroundStyle(.secondary)
                 Spacer()
                 if let error { Text(error).foregroundStyle(.red) }

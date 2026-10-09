@@ -39,7 +39,7 @@ struct ColorPaletteControls: View {
         .disabled(!session.canEditPalette)
         .popover(isPresented: Binding(get: { choosingMaskBackground != nil }, set: { if !$0 { choosingMaskBackground = nil } })) {
             VStack(alignment: .leading, spacing: 12) {
-                Text(choosingMaskBackground == true ? "Mask background" : "Mask foreground").font(.headline)
+                Text((choosingMaskBackground == true ? "Mask background" : "Mask foreground").localized).font(.headline)
                 HStack {
                     Button("Black · Hide") { chooseMask(.black) }
                     Button("White · Reveal") { chooseMask(.white) }
